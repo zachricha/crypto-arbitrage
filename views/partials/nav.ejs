@@ -1,0 +1,25 @@
+<div class = "all-nav">
+  <div class = "nav-top">
+     <ul class = "top-nav-ul">
+       <% if(arbOpp.length > 2) {%>
+         <li class = "top-spread ts1" id = "nav-pad"><span class = "grey-nav"><%=arbOpp[0][0]%>/<%=arbOpp[0][1]%> </span><span class  = "green-nav"><%= arbOpp[0][6] %>% </span><a href = <%= arbOpp[0][7]%>><%= arbOpp[0][2] %></a><span class = "grey-nav"> <%= arbOpp[0][3] %> <%= arbOpp[0][1] %> - </span><a href = <%= arbOpp[0][8]%>><%= arbOpp[0][4] %></a><span class = "grey-nav"> <%= arbOpp[0][5] %> <%= arbOpp[0][1] %> </span></li>
+         <li class = "top-spread ts2"><span class = "grey-nav"><%=arbOpp[1][0]%>/<%=arbOpp[1][1]%> </span><span class  = "green-nav"><%= arbOpp[1][6] %>% </span><a href = <%= arbOpp[1][7]%>><%= arbOpp[1][2] %></a><span class = "grey-nav"> <%= arbOpp[1][3] %> <%= arbOpp[1][1] %> - </span><a href = <%= arbOpp[1][8]%>><%= arbOpp[1][4] %></a><span class = "grey-nav"> <%= arbOpp[1][5] %> <%= arbOpp[1][1] %> </span></li>
+         <li class = "top-spread ts3"><span class = "grey-nav"><%=arbOpp[2][0]%>/<%=arbOpp[2][1]%> </span><span class  = "green-nav"><%= arbOpp[2][6] %>% </span><a href = <%= arbOpp[2][7]%>><%= arbOpp[2][2] %></a><span class = "grey-nav"> <%= arbOpp[2][3] %> <%= arbOpp[2][1] %> - </span><a href = <%= arbOpp[2][8]%>><%= arbOpp[2][4] %></a><span class = "grey-nav"> <%= arbOpp[2][5] %> <%= arbOpp[2][1] %> </span></li>
+      <% } %>
+     </ul>
+     <div class = "nav-top-right">
+       <a href = # id = "arb-btn" data-toggle="modal" data-target="#arb-modal">What is Arbitrage?</a>
+       <a href = # data-toggle="modal" data-target="#donate-modal">Donate</a>
+     </div>
+   </div>
+
+   <div class = "nav-bottom">
+     <div class = "nav-bottom-container">
+       <button class = "brand"><a href = "https://arbitragetokens.com"><span class = "glyphicon glyphicon-transfer"></span>Arbitrage Tokens</a></button>
+       <div class = "nav-bottom-right">
+         <button><a href = # id = "faq-pad" data-toggle="modal" data-target="#faq-modal">FAQ</a></button>
+         <button><a href = # data-toggle="modal" data-target="#contact-modal">Contact</a></button>
+       </div>
+     </div>
+   </div>
+ </div>

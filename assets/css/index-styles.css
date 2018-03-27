@@ -1,0 +1,145 @@
+* {
+  margin: 0px;
+  paddding: 0px;
+  font-family: 'Roboto', sans-serif;
+}
+
+/*spread header*/
+.spread-head {
+  width: 70%;
+  margin: auto;
+  padding-left: 10px;
+}
+.spread-head h1 {
+  font-size: 26px;
+  font-weight: normal;
+}
+#top-p {
+  padding-top: 100px;
+}
+/*table*/
+.table {
+  margin: auto;
+  margin-top: 15px;
+  width: 70%;
+}
+th {
+  font-size: 16px;
+}
+td {
+  font-size: 16px;
+  color: #616161;
+}
+td a {
+  color: #007bff;
+}
+td a:hover {
+  color: #007bff;
+}
+.table-green {
+  background-color: #69F0AE;
+  color: black;
+  font-weight: bold;
+}
+/*BTC Prices*/
+.btc-prices {
+  width: 70%;
+  margin: auto;
+  margin-top: 20px;
+  height: 500px;
+  display: block;
+}
+.btc-table1 {
+  width: 30%;
+  display: inline-block;
+}
+.btc-table {
+  margin: auto;
+  width: 100%;
+}
+.btc-table th {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  border-bottom: 1px solid #ddd;
+}
+.btc-table td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  border-bottom: 1px solid #ddd;
+}
+#view-all {
+  float: right;
+  padding-right: 15px;
+  border-bottom: none;
+  background-color: none;
+}
+#left-view {
+  border-bottom: none;
+}
+/*Chart Styles*/
+.chart {
+  height: 100%;
+  width: 70%;
+  display: inline-block;
+  float: right;
+}
+
+#chart_div {
+  height: 100%;
+  width: 100%;
+}
+/*modals*/
+.modal-footer button {
+  height: 30px;
+  background-color: white;
+  border: 1px solid #bdbdbd;
+  border-radius: 5px;
+}
+.modal-footer button:hover {
+  background-color: #E0E0E0;
+}
+/* contact */
+input {
+  background-color: white;
+  width: 300px;
+  height: 30px;
+  border-radius: 5px;
+  padding-left: 10px;
+  margin: 10px 120px;
+  border: 1px solid #ddd;
+}
+textarea {
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 300px;
+  height: 150px;
+  margin: 10px 120px;
+  border: 1px solid #ddd;
+}
+/*Media Queries*/
+@media screen and (max-width: 1000px) {
+  .btc-table1 {
+    display: block;
+    height: 50%;
+    margin: auto;
+    width: 100%;
+  }
+
+  .chart {
+    display: block;
+    height: 50%;
+    float: none;
+    margin: auto;
+    width: 100%;
+  }
+
+  .btc-prices {
+  width: 75%;
+  margin: auto;
+  margin-top: 20px;
+  height: 1050px;
+  display: block;
+  }
+}

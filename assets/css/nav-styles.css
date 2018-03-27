@@ -1,0 +1,134 @@
+/*entire nav*/
+.all-nav {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+}
+/*nav at top*/
+.nav-top {
+  background-color: #002171;
+  font-size: 14px;
+  height: 25px;
+}
+/*arbitrage data nav top*/
+.top-spread {
+  padding-left: 15px;
+  display: inline-block;
+}
+#nav-pad {
+  padding-left: 30px;
+}
+.top-nav-ul {
+  padding: 4px 0px;
+  display: inline-block;
+}
+.grey-nav {
+  color: grey;
+}
+.green-nav {
+  color: green;
+}
+.top-spread a {
+  color: #007bff;
+  text-decoration: none;
+}
+a:active a:visited {
+  color: #007bff;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+/*right side of nav*/
+.nav-top-right {
+  float: right;
+  padding: 4px 0;
+}
+.nav-top-right a {
+  outline: none;
+  color: #bdbdbd;
+  text-decoration: none;
+  padding-right: 30px;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+#arb-btn {
+  padding-right: 15px;
+}
+.nav-top-right a:hover {
+  text-decoration: none;
+  color: #0d47a1;
+}
+
+/*Nav at bottom creates sides blue*/
+.nav-bottom {
+  margin: 0 auto;
+  width: 100%;
+  height: 63px;
+  background-color: #0d47a1;
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2);
+}
+/* blue nav with 75% width */
+.nav-bottom-container {
+  margin: 0 auto;
+  width: 75%;
+  height: 63px;
+  background-color: #0d47a1;
+}
+/* brand */
+.brand {
+  margin: 17px 0px;
+  background: none;
+  border: none;
+}
+.brand a {
+  font-size: 18px;
+  text-decoration: none;
+  color: #bdbdbd;
+}
+.brand a:hover {
+  color: #002171;
+}
+/*right bottom nav*/
+.nav-bottom-right {
+  margin: 20px 0px;
+  float: right;
+  display: inline-block;
+}
+.nav-bottom-right button {
+  outline: none;
+  background: none;
+  border: none;
+}
+.nav-bottom-right button a {
+  outline: none;
+  text-decoration: none;
+  color: #bdbdbd;
+  font-size: 16px;
+}
+.nav-bottom-right button a:hover {
+  color: #002171;
+}
+#faq-pad {
+  padding-right: 15px;
+}
+
+
+/*Media Queries*/
+@media screen and (max-width: 1730px) {
+  .ts3 {
+    display: none;
+  }
+}
+@media screen and (max-width: 1230px) {
+  .ts2 {
+    display: none;
+  }
+}
+@media screen and (max-width: 730px) {
+  .ts1 {
+    display: none;
+  }
+}

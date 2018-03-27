@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113206878-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-113206878-1');
+    </script>
+    <title>Arbitrage Tokens</title>
+    <meta name="description" content="Real-time crypto arbitrage data from the most popular exchanges, calculated using bid and ask prices">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <link rel="icon" href="/assets/icon/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href = "/assets/css/bootstrap.css" rel="stylesheet" type = "text/css" >
+    <link href = "/assets/css/index-styles.css" rel="stylesheet" type = "text/css" >
+    <link href = "/assets/css/nav-styles.css" rel="stylesheet" type = "text/css" >
+    <link href = "/assets/css/footer-styles.css" rel="stylesheet" type = "text/css" >
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {packages: ['corechart', 'bar']});
+      google.charts.setOnLoadCallback(drawBarColors);
+
+      function drawBarColors() {
+        var data = google.visualization.arrayToDataTable([
+          ['Exchange', 'Price (USD)'],
+          <% for(i = 0; i < btcArr.length; i++) { %>
+            ['<%= btcArr[i][0] %>', <%= btcArr[i][1] %>],
+          <%};%>
+      ]);
+        var options = {
+          width: "100%",
+          height: "100%",
+          colors: ['#007bff'],
+          hAxis: {
+            title: 'Price (USD)',
+            minValue: 0
+          },
+        };
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      };
+      $(window).resize(function(){
+        drawBarColors();
+      });
+    </script>
+  </head>
+  <body>
+    <div id="donate-modal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Donate</h4>
+          </div>
+          <div class="modal-body">
+            <p>BTC - 1Jj4FmnQP3f7umcXQgNBWVBP4kpXzb733d</p>
+            <p>ETH - 0x03aff359f1398028A8bb2Da10e8ee43d50B92e9e</p>
+            <p>LTC - LiGdudEfW4QvtE1DJf5tem5PurgxigkJ6D</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="arb-modal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">What is Arbitrage?</h4>
+          </div>
+          <div class="modal-body">
+            <p>Arbitrage is the process of buying a coin on one exchange and selling it on another in order to take advantage of a price difference.</p>
+            <a href = "https://www.investopedia.com/terms/a/arbitrage.asp">Learn More</a>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="faq-modal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">FAQ</h4>
+          </div>
+          <div class="modal-body">
+            <h4>Info</h4>
+            <p>Arbitrage opportunities are calculated by taking the pair (bid) price from the first exchange and comparing that with the pair (ask) price from the second exchange.</p>
+            <h4>Exchanges</h4>
+            <% var exArr = ["Gdax", "Bittrex", "Binance", "Poloniex", "KuCoin"] %>
+            <% for(i = 0; i < exArr.length; i++) { %>
+              <p><%= exArr[i] %></p>
+            <% } %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="contact-modal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Contact</h4>
+          </div>
+          <div class="modal-body">
+            <form class = "form" action="https://formspree.io/zrricha1@gmail.com"
+              method="POST">
+              <div class = "form-group">
+                <input class = "name-id" type="text" name="Name" placeholder = "Name">
+              </div>
+              <div class = "form-group">
+                <input type="email" name="_replyto" placeholder = "Email address">
+              </div>
+              <div class = "form-group">
+                <textarea type = "message" name = "Message" placeholder = "Message"></textarea>
+              </div>
+              <input class = "submit" type="submit" value="Send">
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%- include partials/nav.ejs %>
+
+    <div class = "spread-head" id = "top-p"><h1><span class = "glyphicon glyphicon-stats"></span> Bitcoin Prices</h1></div>
+
+    <div class = "btc-prices">
+      <div class = "btc-table1">
+
+        <table class="btc-table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Exchange</th>
+              <th scope="col">Price (USD)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(i = 0; i < btcArr.length; i++) {%>
+              <tr>
+                <th scope = "row"><%=btcArr[i][0]%></th>
+                <td class = "table-green">$<%=btcArr[i][1]%></td>
+              </tr>
+              <% } %>
+          </tbody>
+        </table>
+      </div>
+      <div class = "chart">
+        <div id="chart_div"></div>
+      </div>
+    </div>
+
+
+    <div class = "spread-head"><h1><span class = "glyphicon glyphicon-th-list"></span> Exchange Arbitrage</h1></div>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Pair</th>
+          <th scope="col">% Difference</th>
+          <th scope="col">Low Exchange</th>
+          <th scope="col">Low Price (Ask)</th>
+          <th scope="col">High Exchange</th>
+          <th scope="col">High Price (Bid)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(i = 0; i < arbOpp.length; i++) {%>
+          <tr>
+            <th scope = "row"><%= arbOpp[i][0]%> / <%= arbOpp[i][1]%></th>
+            <td class = "table-green"><%= arbOpp[i][6]%>%</td>
+            <td><a href = <%= arbOpp[i][7]%>><%= arbOpp[i][2]%></a></td>
+            <td><%= arbOpp[i][3]%> <%= arbOpp[i][1]%></td>
+            <td><a href = <%= arbOpp[i][8]%>><%= arbOpp[i][4]%></a></td>
+            <td><%= arbOpp[i][5]%> <%= arbOpp[i][1]%></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+    <%- include partials/footer.ejs %>
+
+  </body>
+</html>
