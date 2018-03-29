@@ -96,12 +96,12 @@
             <h4 class="modal-title">FAQ</h4>
           </div>
           <div class="modal-body">
-            <h4>Info</h4>
-            <p>Arbitrage opportunities are calculated by taking the pair (bid) price from the first exchange and comparing that with the pair (ask) price from the second exchange.</p>
-            <h4>Exchanges</h4>
-            <% var exArr = ["Gdax", "Bittrex", "Binance", "Poloniex", "KuCoin"] %>
+            <h4 class = "bold">Info</h4>
+            <p>Arbitrage opportunities are calculated by taking the pair (ask) price from the first exchange and comparing that with the pair (bid) price from the second exchange.</p>
+            <h4 class = "bold">Exchanges</h4>
+            <% var exArr = ["Gdax", "Bittrex", "Binance", "Poloniex", "KuCoin", "Liqui", "HitBTC"] %>
             <% for(i = 0; i < exArr.length; i++) { %>
-              <p><%= exArr[i] %></p>
+              <p>- <%= exArr[i] %></p>
             <% } %>
           </div>
           <div class="modal-footer">
@@ -118,7 +118,7 @@
             <h4 class="modal-title">Contact</h4>
           </div>
           <div class="modal-body">
-            <form class = "form" action="https://formspree.io/zrricha1@gmail.com"
+            <form class = "form" action="https://formspree.io/zrricha3@gmail.com"
               method="POST">
               <div class = "form-group">
                 <input class = "name-id" type="text" name="Name" placeholder = "Name">
