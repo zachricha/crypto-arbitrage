@@ -13,14 +13,15 @@ const {
   poloPrices,
   liqPrices,
   hitPrices,
+  cryptPrices,
 } = require('./exchanges');
 
-var bit, bin, gdax, kucoin, polo, liqui, hitb = [];
+let bit, bin, gdax, kucoin, polo, liqui, hitb, cryptop = [];
 
-var arbOpp = [];
-var btcArr = [];
+let arbArr = [];
+let btcArr = [];
 
-const time = 10000; // time for data to update
+const time = 10000;
 
 function getExchanges() {
   bit = bitPrices.bittrexPrices();
@@ -30,29 +31,30 @@ function getExchanges() {
   polo = poloPrices.poloniexPrices();
   liqui = liqPrices.liquiPrices();
   hitb = hitPrices.hitbtcPrices();
+  cryptop = cryptPrices.cryptopiaPrices();
 };
 
-function sorted(a, b) {
-  if (a[6] === b[6]) {
+function sortArbitrage(a, b) {
+  if (a.percent === b.percent) {
     return 0;
   } else {
-    return (a[6] < b[6]) ? -1 : 1;
+    return (a.percent < b.percent) ? 1 : -1;
   };
 };
 
-function sorted2(a, b) {
-  if (a[1] === b[1]) {
+function sortBtc(a, b) {
+  if (a.price === b.price) {
     return 0;
   } else {
-    return (a[1] < b[1]) ? -1 : 1;
+    return (a.price < b.price) ? 1 : -1;
   };
 };
 
 function duplicates(arr) {
-  var uniques = [];
-  var itemsFound = {};
-  for (var i = 0, l = arr.length; i < l; i++) {
-    var stringified = JSON.stringify(arr[i]);
+  let uniques = [];
+  let itemsFound = {};
+  for (let i = 0, l = arr.length; i < l; i++) {
+    let stringified = JSON.stringify(arr[i]);
     if (itemsFound[stringified]) {
       continue;
     }
@@ -63,9 +65,14 @@ function duplicates(arr) {
 }
 
 function getAllPrices() {
-  arbOpp = [];
+
+  arbArr = [];
   btcArr = [];
-  var exchanges = [
+
+  let newBtcPrice;
+  let checkPair;
+
+  let exchanges = [
     ['Bittrex', bit, 'https://bittrex.com'],
     ['Binance', bin, 'https://www.binance.com'],
     ['Gdax', gdax, 'https://www.gdax.com'],
@@ -73,11 +80,8 @@ function getAllPrices() {
     ['Poloniex', polo, 'https://poloniex.com'],
     ['Liqui', liqui, 'https://liqui.io'],
     ['HitBTC', hitb, 'https://hitbtc.com'],
+    ['Cryptopia', cryptop, 'https://cryptopia.co.nz'],
   ];
-
-  // exchange[1][i][2] 1: refers to to the second variable with the all the data(coin, pair, bid, ask) in the exchange variable, this always stays the same.
-  // i: is refering to the first exchange that is being compared it will be either i or j
-  // 2: refers to one of four things (coin, pair, bid, ask) or 0 1 2 3
 
   exchanges.forEach(function(exchange) {
     exchanges.forEach(function(exchange2) {
@@ -86,19 +90,37 @@ function getAllPrices() {
       };
       for (i = 0; i < exchange[1].length; i++) {
         for (j = 0; j < exchange2[1].length; j++) {
-          if(exchange[1][i][0] + exchange[1][i][1] === exchange2[1][j][0] + exchange2[1][j][1]) {
-            if (exchange[1][i][0] === "BTC" && exchange[1][i][1] === "USDT") {
-              newBtcPrice = +parseFloat(exchange[1][i][3]).toFixed(2);
-              btcArr.push([exchange[0], newBtcPrice]);
+          if(exchange[1][i].coin + exchange[1][i].pair === exchange2[1][j].coin + exchange2[1][j].pair) {
+            if (exchange[1][i].coin === "BTC" && exchange[1][i].pair === "USDT") {
+              newBtcPrice = +parseFloat(exchange[1][i].ask).toFixed(2);
+              btcArr.push({exch: exchange[0], price: newBtcPrice});
             };
-            if ((exchange2[1][j][2] / exchange[1][i][3]) > 1.001) { //bid-ask or exchange2[1][j][1] / exchange[1][i][2]
-              percent = Math.round(((exchange2[1][j][2] / exchange[1][i][3]) * 100 - 100) * 100) / 100; // bid-ask
-              if (exchange[1][i][1] === "USDT") {
+            if ((exchange2[1][j].bid / exchange[1][i].ask) > 1.001) {
+              percent = Math.round(((exchange2[1][j].bid / exchange[1][i].ask) * 100 - 100) * 100) / 100;
+              if (exchange[1][i].pair === "USDT") {
                 checkPair = "USD";
               } else {
-                checkPair = exchange[1][i][1];
+                checkPair = exchange[1][i].pair;
               }
-              arbOpp.push([exchange[1][i][0], checkPair, exchange[0], exchange[1][i][3], exchange2[0], exchange2[1][j][2], percent, exchange[2], exchange2[2]]); // ask-bid
+
+              if(exchange[1][i].volume > 0 && exchange2[1][j].volume > 0
+              && percent < 10000) {
+
+                arbArr.push({
+                  coin: exchange[1][i].coin,
+                  pair: checkPair,
+                  exch1: exchange[0],
+                  exch1Vol: exchange[1][i].volume,
+                  ask: exchange[1][i].ask,
+                  exch2: exchange2[0],
+                  exch2Vol: exchange2[1][j].volume,
+                  bid: exchange2[1][j].bid,
+                  percent: percent,
+                  exchUrl1: exchange[2],
+                  exchUrl2: exchange2[2],
+                });
+
+              };
             };
           };
         };
@@ -106,23 +128,17 @@ function getAllPrices() {
     });
   });
 
-  arbOpp = arbOpp.sort(sorted);
-  btcArr = btcArr.sort(sorted2);
-  btcArr = btcArr.reverse();
+  arbArr = arbArr.sort(sortArbitrage);
+  btcArr = btcArr.sort(sortBtc);
   btcArr = duplicates(btcArr);
-  arbOpp = arbOpp.reverse();
   getExchanges();
-  setTimeout(getAllPrices, time);
 };
 
 getExchanges();
-setTimeout(getAllPrices, time);
+setInterval(getAllPrices, time);
 
 app.get("/", function(req, res) {
-  res.render('index', {
-    arbOpp: arbOpp,
-    btcArr: btcArr,
-  });
+  res.render('index', { arbArr, btcArr });
 });
 
 app.listen(3000, function() {

@@ -1,14 +1,18 @@
 const request = require('request');
 
-var prices = [];
+let prices = [];
 
 module.exports.binancePrices = () => {
   request('https://api.binance.com/api/v1/ticker/allBookTickers', function(error, response, body) {
     try {
       prices = [];
       body = JSON.parse(body);
-      for (i = 0; i < body.length; i++) {
-        symbol = body[i]['symbol'];
+      for (let i = 0; i < body.length; i++) {
+        const symbol = body[i]['symbol'];
+
+        let coin;
+        let pair;
+
         if (symbol.substring(symbol.length - 3, symbol.length) !== "BNB") {
           if (symbol.substring(symbol.length - 4, symbol.length) === "USDT") {
             coin = symbol.replace("USDT", "");
@@ -20,9 +24,10 @@ module.exports.binancePrices = () => {
             pair = "ETH";
             coin = symbol.replace("ETH", "");
           }
-          bid = parseFloat(body[i]['bidPrice']);
-          ask = parseFloat(body[i]['askPrice']);
-          prices.push([coin, pair, bid, ask]);
+          const bid = parseFloat(body[i]['bidPrice']);
+          const ask = parseFloat(body[i]['askPrice']);
+          const volume = parseFloat(body[i]['quoteVolume']);
+          prices.push({coin, pair, bid, ask, volume});
         };
       };
     } catch (e) {};

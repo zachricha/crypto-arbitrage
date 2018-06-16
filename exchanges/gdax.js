@@ -1,10 +1,10 @@
 const gdax = require('gdax');
 const pub = new gdax.PublicClient();
 
-var ids = [];
-var coins = [];
-var prices = [];
-var count = 0;
+let ids = [];
+let coins = [];
+let prices = [];
+let count = 0;
 
 module.exports.gdaxPrices = () => {
   pub.getProducts((error, response, body) => {
@@ -13,7 +13,11 @@ module.exports.gdaxPrices = () => {
       coins = [];
       count = 0;
       prices = [];
-      for (i = 0; i < body.length; i++) {
+
+      let coin;
+      let fcoin;
+
+      for (let i = 0; i < body.length; i++) {
         if (body[i].id.substring(4, body[i].id.length) !== "EUR" && body[i].id.substring(4, body[i].id.length) !== "GBP") {
           coin = body[i].id;
           fcoin = body[i].id.substring(0, 4);
@@ -25,8 +29,8 @@ module.exports.gdaxPrices = () => {
           } else {
             coin = fcoin + "BTC";
           };
-          coin1 = coin.split('-')[0];
-          pair = coin.split('-')[1];
+          const coin1 = coin.split('-')[0];
+          const pair = coin.split('-')[1];
           coins.push([coin1, pair]);
           ids.push(body[i].id);
         };
@@ -38,9 +42,15 @@ module.exports.gdaxPrices = () => {
   function getPrices() {
     pub.getProductTicker(ids[count], (error, response, body) => {
       try {
-        bid = body.bid;
-        ask = body.ask;
-        prices.push([coins[count][0], coins[count][1], parseFloat(bid), parseFloat(ask)]);
+        const bid = body.bid;
+        const ask = body.ask;
+        const volume = body.volume;
+        prices.push({coin: coins[count][0],
+          pair: coins[count][1],
+          bid: parseFloat(bid),
+          ask: parseFloat(ask),
+          volume: parseFloat(volume),
+        });
       } catch (e) {}
       count += 1;
       if (count < ids.length) {

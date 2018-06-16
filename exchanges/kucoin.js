@@ -1,13 +1,17 @@
 const request = require('request');
 
-var prices = [];
+let prices = [];
 
 module.exports.kucoinPrices = () => {
   request('https://api.kucoin.com/v1/open/tick', function(error, response, body) {
     try {
       prices = [];
       body = JSON.parse(body).data;
-      for (i = 0; i < body.length; i++) {
+
+      let coin;
+      let pair;
+
+      for (let i = 0; i < body.length; i++) {
         coin = body[i].coinType;
         pair = body[i].coinTypePair;
         if (coin !== "KCS" && pair !== "KCS" && coin != "BTM") {
@@ -16,9 +20,10 @@ module.exports.kucoinPrices = () => {
           } else if (pair === "BCH") {
             pair = "BCC";
           }
-          bid = body[i].buy;
-          ask = body[i].sell;
-          prices.push([coin, pair, bid, ask]);
+          const bid = body[i].buy;
+          const ask = body[i].sell;
+          const volume = body[i].volValue;
+          prices.push({coin, pair, bid, ask, volume});
         };
       };
     } catch (e) {}
